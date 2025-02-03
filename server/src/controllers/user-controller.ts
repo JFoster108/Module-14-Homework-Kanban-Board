@@ -1,5 +1,8 @@
-import { Request, Response } from 'express';
-import { User } from '../models/user.js';
+import { Request, Response } from "express";
+import dotenv from "dotenv";
+import User from "../models/user";
+
+dotenv.config();
 
 // GET /Users
 export const getAllUsers = async (_req: Request, res: Response) => {
@@ -58,6 +61,11 @@ export const updateUser = async (req: Request, res: Response) => {
   } catch (error: any) {
     res.status(400).json({ message: error.message });
   }
+};
+
+export const logout = async (req: Request, res: Response) => {
+  res.clearCookie("jwt");
+  return res.json({ message: "Logged out successfully" });
 };
 
 // DELETE /Users/:id

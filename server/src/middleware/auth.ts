@@ -1,10 +1,25 @@
-import { Request, Response, NextFunction } from 'express';
-import jwt from 'jsonwebtoken';
+import { Request, Response, NextFunction } from "express";
+import jwt from "jsonwebtoken";
+import dotenv from "dotenv";
 
-interface JwtPayload {
-  username: string;
+dotenv.config();
+
+interface AuthRequest extends Request {
+  user?: any;
 }
 
-export const authenticateToken = (req: Request, res: Response, next: NextFunction) => {
-  // TODO: verify the token exists and add the user data to the request object
+export const authMiddleware = (req: AuthRequest, res: Response, next: NextFunction) => {
+  const token = req.cookies?.jwt;
+
+  if (!token) {
+    return res.status(401).json({ message: "Unauthorized, no token provided" });
+  }
+
+  try {
+    const decoded = jwt.verify(token, process.env.JWT_SECRET as string);
+    req.user = decoded;
+    return next(); // ✅ Fix: Ensure `next()` is called properly
+  } catch (err) {
+    return res.status(403).json({ message: "Invalid or expired token" });
+  }
 };

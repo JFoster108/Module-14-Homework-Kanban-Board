@@ -1,15 +1,13 @@
-import { Router, Request, Response } from 'express';
-import { User } from '../models/user.js';
-import jwt from 'jsonwebtoken';
-import bcrypt from 'bcrypt';
+import express from "express";
+import { login, logout } from "../controllers/user-controller";
+import { authMiddleware } from "../middleware/auth";
 
-export const login = async (req: Request, res: Response) => {
-  // TODO: If the user exists and the password is correct, return a JWT token
-};
+const router = express.Router();
 
-const router = Router();
-
-// POST /login - Login a user
-router.post('/login', login);
+router.post("/login", login);
+router.post("/logout", logout);
+router.get("/protected", authMiddleware, (req, res) => {
+  res.json({ message: "Access granted", user: req.user });
+});
 
 export default router;
