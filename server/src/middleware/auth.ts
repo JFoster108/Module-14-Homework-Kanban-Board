@@ -8,7 +8,7 @@ interface AuthRequest extends Request {
   user?: any;
 }
 
-export const authMiddleware = (req: AuthRequest, res: Response, next: NextFunction) => {
+export const authenticateToken = (req: AuthRequest, res: Response, next: NextFunction) => {
   const token = req.cookies?.jwt;
 
   if (!token) {
