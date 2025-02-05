@@ -16,7 +16,7 @@ const generateToken = (userId: number): string => {
   return jwt.sign(
     { id: userId },
     secretKey, // ✅ Ensure secret key is defined
-    { expiresIn: process.env.JWT_EXPIRES_IN || "1h" } // ✅ Fix option placement
+    { expiresIn: "1h" } // ✅ Fix option placement
   );
 };
 
