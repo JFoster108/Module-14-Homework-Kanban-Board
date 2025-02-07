@@ -3,7 +3,7 @@ import AuthService from "../utils/auth";
 
 const API_URL = "http://localhost:5000/auth/login"; // Adjust if using an environment variable
 
-const login = async (userInfo: UserLogin): Promise<boolean> => {
+const login = async (userInfo: UserLogin) => {
   try {
     const response = await fetch(API_URL, {
       method: "POST",
@@ -24,10 +24,10 @@ const login = async (userInfo: UserLogin): Promise<boolean> => {
     // ✅ Store JWT in AuthService
     AuthService.login(data.token);
 
-    return true; // ✅ Login successful
+    return data; // ✅ Login successful
   } catch (error) {
     console.error("Login error:", error);
-    return false; // ❌ Login failed
+    return Promise.reject("login failed"); // ❌ Login failed
   }
 };
 
