@@ -1,15 +1,15 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter+Tight:ital,wght@0,100..900;1,100..900&display=swap');
 
 :root {
-  font-family: 'Inter Tight', system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
-  font-weight: 400;
-  color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  --primary-color: #a29bfe; /* Periwinkle */
+  --secondary-color: #81ecec; /* Pastel Blue */
+  --accent-color: #74b9ff; /* Light Blue */
+  --background-color: #f5f7fa; /* Soft White */
+  --card-background: #dfe6e9; /* Light Grey */
+  --text-color: #2d3436; /* Dark Grey */
+  --border-radius: 12px;
+  --shadow: 4px 4px 10px rgba(0, 0, 0, 0.1);
+  --font-family: 'Poppins', sans-serif;
 }
 
 /* webkit solution */
@@ -32,14 +32,15 @@ a:hover {
 }
 
 body {
-  background: #ECF0F1;
-  background-size: cover;
-  background-repeat: no-repeat no-repeat;
-  background-position: center center;
+  font-family: var(--font-family);
+  background: var(--background-color);
+  color: var(--text-color);
   margin: 0;
-  place-items: center;
-  min-width: 320px;
-  min-height: 100vh;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
 }
 
 h1 {
@@ -48,18 +49,19 @@ h1 {
 }
 
 button {
-  border-radius: 8px;
-  border: 1px solid transparent;
-  padding: 0.6em 1.2em;
-  font-size: 1em;
-  font-weight: 500;
-  font-family: inherit;
-  background-color: #1a1a1a;
+  background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+  color: white;
+  padding: 12px 18px;
+  border: none;
+  border-radius: var(--border-radius);
   cursor: pointer;
-  transition: border-color 0.25s;
+  transition: background 0.3s ease, transform 0.2s ease;
+  font-weight: bold;
 }
+
 button:hover {
-  border-color: #646cff;
+  background: linear-gradient(135deg, var(--secondary-color), var(--primary-color));
+  transform: scale(1.05);
 }
 button:focus,
 button:focus-visible {
@@ -90,6 +92,16 @@ tbody tr:nth-child(odd) {
   padding: 1em 2em;
 }
 
+.navbar {
+  background: var(--accent-color);
+  padding: 12px 24px;
+  border-radius: var(--border-radius);
+  box-shadow: var(--shadow);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
 .nav ul {
   display: flex;
   margin-left: auto;
@@ -106,6 +118,20 @@ tbody tr:nth-child(odd) {
 
 .nav-title a {
   color: #b864c4;
+}
+
+.navbar a {
+  color: white;
+  text-decoration: none;
+  padding: 10px 20px;
+  border-radius: var(--border-radius);
+  transition: background 0.3s ease;
+  font-weight: bold;
+}
+
+.navbar a:hover {
+  background: var(--secondary-color);
+  transform: scale(1.05);
 }
 
 .nav-item {
@@ -136,14 +162,26 @@ tbody tr:nth-child(odd) {
   display: flex;
 }
 
-.swim-lane {
+.swimlane {
+  background: var(--card-background);
+  border-radius: var(--border-radius);
+  padding: 20px;
+  box-shadow: var(--shadow);
+  transition: transform 0.3s ease;
+}
+
+.swimlane:hover {
+  transform: translateY(-3px);
+  box-shadow: 8px 8px 18px rgba(0, 0, 0, 0.15);
+}
+
+.swimlane-header {
+  background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+  color: white;
+  padding: 12px;
+  border-radius: var(--border-radius);
   text-align: center;
-  font-weight: 500;
-  width: 33%;
-  height: 90vh; 
-  border: 1px solid rgba(0, 0, 0, 0.2);
-  margin: 5px;
-  padding: 5px;
+  font-weight: bold;
 }
 
 .todo {
@@ -156,6 +194,20 @@ tbody tr:nth-child(odd) {
 
 .done {
   background-color: #732381;
+}
+
+.ticket {
+  background: white;
+  padding: 12px;
+  border-radius: var(--border-radius);
+  box-shadow: var(--shadow);
+  margin-bottom: 12px;
+  transition: transform 0.3s ease;
+}
+
+.ticket:hover {
+  transform: translateY(-2px);
+  box-shadow: 8px 8px 18px rgba(0, 0, 0, 0.15);
 }
 
 .ticket-card {
