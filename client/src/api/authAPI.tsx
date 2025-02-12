@@ -1,7 +1,7 @@
 import { UserLogin } from "../interfaces/UserLogin";
 import AuthService from "../utils/auth";
 
-const API_URL = "http://localhost:5000/auth/login"; // Adjust if using an environment variable
+const API_URL = "http://localhost:3001/auth/login"; // Adjust if using an environment variable
 
 const login = async (userInfo: UserLogin) => {
   try {
