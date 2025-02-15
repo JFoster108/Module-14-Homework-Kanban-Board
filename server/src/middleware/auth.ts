@@ -1,32 +1,29 @@
-import { Request, Response, NextFunction } from "express";
-import jwt from "jsonwebtoken";
-import dotenv from "dotenv";
+import { Request, Response, NextFunction } from 'express';
+import jwt from 'jsonwebtoken';
 
-dotenv.config();
 
-interface AuthRequest extends Request {
-  user?: any;
+interface JwtPayload {
+  username: string;
 }
 
-export const authenticateToken = (req: AuthRequest, res: Response, next: NextFunction) => {
-  if (process.env.ADMIN_SECRET && process.env.ADMIN_SECRET===req.headers.authorization){
-    req.user="admin"
-    return next();
-  }
-  
-  const token = req.cookies?.jwt;
 
-  if (!token) {
-    return res.status(401).json({ message: "Unauthorized, no token provided" });
-  }
+export const authenticateToken = (req: Request, res: Response, next: NextFunction) => {
+  const authHeader = req.headers.authorization;
 
+  if (authHeader) {
+    const token = authHeader.split(' ')[1];
 
-  
-  try {
-    const decoded = jwt.verify(token, process.env.JWT_SECRET as string);
-    req.user = decoded;
-    return next(); // ✅ Fix: Ensure `next()` is called properly
-  } catch (err) {
-    return res.status(403).json({ message: "Invalid or expired token" });
+    const secretKey = process.env.JWT_SECRET_KEY || '';
+
+    jwt.verify(token, secretKey, (err, user) => {
+      if (err) {
+        return res.sendStatus(403); 
+      }
+
+      req.user = user as JwtPayload;
+      return next(); 
+    });
+  } else {
+    res.sendStatus(401); 
   }
 };

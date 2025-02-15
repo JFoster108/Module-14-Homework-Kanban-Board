@@ -1,7 +1,7 @@
 import { Router, Request, Response } from 'express';
 import { User } from '../models/user.js';
 import jwt from 'jsonwebtoken';
-import bcrypt from 'bcrypt';
+import bcrypt from 'bcryptjs';
 import dotenv from "dotenv";
 dotenv.config();
 
@@ -23,7 +23,7 @@ export const login = async (req: Request, res: Response): Promise<void> => {
 
     const token : string = jwt.sign(
       { id: user.id, username: user.username},
-      process.env.JWT_SECRET_TOKEN as string,
+      process.env.JWT_SECRET_KEY as string,
       { expiresIn: '15m' }
     );
 
